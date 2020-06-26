@@ -54,18 +54,30 @@ def generatore(): #GENERATORE WORDLIST
 	f3 = open(input("Inserisci il nome del nuovo file:  ").strip()+".txt", "a")                             #inserimento wordlist risultato
 	a= ""
 	count= 0
+	f1line= 0
+	f2line= 0
+
+	for line in f1: 
+		f1line+=1
+	for line in f2:
+		f2line+=1
+	f3line= f1line*f2line*2                                                                                 #calcola il totale delle parole da generare
+
+	f1.seek(0,0)
+	f2.seek(0,0)
 
 	for line1 in f1:                                                                                        #legge la prima wordlist
 		for line2 in f2:                                                                                #legge la seconda wordlist
 			a= (line1.replace('\n','')+line2)                                                       #elimina lo \n dalla prima parola
-			print(a)                                                                                #stampa la parola appena generata
-			f3.write(a.replace(a[0],a[0].upper()))                                                  #scrivi parola in upperCase
-			f3.write(a.replace(a[0],a[0].lower()))                                                  #scrivi parola in lowerCase
+			f3.write(a.title())                                                                     #scrivi parola in upperCase
+			f3.write(a.lower())                                                                     #scrivi parola in lowerCase
 			count= count+2                                                                          #contatore delle parole generate
-		
+			percent= count*100/f3line
+			os.system('clear')
+			print("Parole generate: "+str(count)+"/"+str(f3line)+" ("+"%.2f"% percent+"%)")         #mostra il progresso dell'operazione "parole attuali/totali (%)"
 		f2.seek(0,0)                                                                                    #riporta il puntatore all'inizio del file2
-		os.system('clear')
-		print ("\n---- LA TUA WORDLIST E' STATA GENERATA ----\nParole generate: "+str(count)+'\n')	#stampa il contatore
+	os.system('clear')
+	print ("\n---- LA TUA WORDLIST E' STATA GENERATA ----\nParole generate: "+str(count)+'\n')	        #stampa il numero delle parole generate
 
 
 	f1.close()                                                                                              #chiusura dei file
